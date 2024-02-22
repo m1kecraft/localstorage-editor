@@ -1,0 +1,30 @@
+<table id="storage"></table>
+<script>
+try{
+    function l(id){return document.querySelector(id)}
+  //thanks to https://gist.github.com/apolopena/2b6989c85fa7a32e626b83ccade9798e
+  //localStorage.setItem("test","1234")
+  function allStorage() {
+    var archive = [],
+        keys = Object.keys(localStorage),
+        i = 0, key;
+
+    for (; key = keys[i]; i++) {
+        archive.push( key + '=' + localStorage.getItem(key));
+    }
+
+    return archive;
+}
+var storage=[3,5,1,9,4]
+  var tr=null;
+  var td=null;
+for(var i in storage){
+tr=document.createElement("tr")
+tr.id="row0"
+td=document.createElement("p")
+td.innerText=i+":"+storage[i]
+td.id="column"+i
+l("#storage").appendChild(td)
+}
+}catch(e){alert(e)}
+</script>
