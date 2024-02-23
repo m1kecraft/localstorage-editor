@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <table id="storage"></table>
 <style>
 	tr:nth-child(even){background-color: #f2f2f2;}
@@ -10,10 +11,8 @@
 	}
 </style>
 <script>
-try{
 	function l(id){return document.querySelector(id)}
 	//thanks to https://gist.github.com/apolopena/2b6989c85fa7a32e626b83ccade9798e
-	localStorage.setItem("test","1234")
 	function allStorage() {
 		var archive = [],keys = Object.keys(localStorage),i = 0, key;
 		for (; key = keys[i]; i++) {
@@ -27,21 +26,23 @@ var storage=allStorage()
   var td1=null;
   var td2=null;
   var td3=null;
+  var td4=null;
 function update(){
-	try{
+	storage=allStorage()
 	for(var j of document.querySelectorAll('.e')){
 		j.remove()
 	}
+	window.setTimeout(function(){
 	for(var i in storage){
 		td=document.createElement("td")
 		td1=document.createElement("td")
 		td2=document.createElement("td")
 		td3=document.createElement("td")
+		td4=document.createElement("td")
 		td.innerText=storage[i]
 		td1.innerText=":"
 		td2.innerText=localStorage.getItem(storage[i])
-		td3.innerHTML="<button onclick=\"localStorage.setItem('"+storage[i]+"',l(\"2column"+i+"\").innerText)\">Set</button>";
-		td.id="a0column"+i
+		td.id="0column"+i
 		td.classList.add("e")
 		td1.id="1column"+i
 		td1.classList.add("e")
@@ -50,6 +51,10 @@ function update(){
 		td2.contentEditable=true;
 		td3.id="3column"+i
 		td3.classList.add("e")
+		td4.id="3column"+i
+		td4.classList.add("e")
+		td3.innerHTML="<button onclick=\"try{localStorage.setItem('"+storage[i]+"',document.getElementById('2column"+i+"').innerText)}catch(e){alert(e)}\">Set</button>";
+		td4.innerHTML="<button onclick=\"try{localStorage.removeItem('"+storage[i]+"')}catch(e){alert(e)}\">Delete</button>";
 		tr=document.createElement("tr")
 		tr.id="row0"
 		tr.classList.add("e")
@@ -57,11 +62,12 @@ function update(){
 		tr.appendChild(td1)
 		tr.appendChild(td2)
 		tr.appendChild(td3)
+		tr.appendChild(td4)
 		l("#storage").appendChild(tr)
 	}
-}catch(e){alert(e)}
+	},10)
 }
 update()
-}catch(e){alert(e)}
 </script>
 <button onclick="update()">Update</button>
+<button onclick="localStorage.setItem(prompt('name'),prompt('value'))">Add</button>
